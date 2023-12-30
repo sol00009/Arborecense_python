@@ -1,0 +1,43 @@
+name:
+run.sol00009
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.8", "3.9", "3.10"]
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v3
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pylint
+    - name: Analysing the code with pylint
+      run: |
+        pylint $(git ls-files '*.py')
+            - name: paloaltonetworks/cov
+  # You may pin to the exact commit or the version.
+  # uses: PaloAltoNetworks/cov@a5c8c2cfd4bbfa59abe1f12eb10a6e455dea7b8a
+  uses: PaloAltoNetworks/cov@3.1.0
+  with:
+    # The main branch name.
+    main_branch: # default is main
+    # Running mode. Either 'coverage', 'send-status' or 'both'.
+    cov_mode: # default is coverage
+    # The name of the coverage file to use.
+    cov_file: # default is coverage.out
+    # Default required coverage percentage.
+    cov_threshold: # optional, default is 90
+    # The version to use for cov.
+    cov_version: # default is ${{github.action_ref}}
+    # In mode 'send-status', pass the workflow id that generated the cov report.
+
+    workflow_run_id: # optional
+    # In mode 'send-status', pass the workflow head_sha.
+
+    workflow_head_sha: # optional
+          
